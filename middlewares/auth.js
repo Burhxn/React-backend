@@ -6,16 +6,14 @@ config("/.env");
 
 const isAuthenticated = (req, res, next) => {
   try {
-    const { token } = req.params;
+    const  {token} = req.cookies;
+    // console.log(token)
     const secretKey = process.env.SECRET_KEY;
-
     jwt.verify(token, secretKey, (error, decode) => {
       if (error) {
         messagehandler(res, 401, "unauthorised");
       } else {
-        
         req.user = decode._id;
-
         // console.log(req.user)
         return next();
       }

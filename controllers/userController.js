@@ -63,12 +63,20 @@ const handleLogin = async (req, res) => {
 
     const payload = existingUser._id;
 
-    const createToken = await jwt.sign({ _id: payload }, secretkey);
+    const token = await jwt.sign({ _id: payload }, secretkey);
 
-    if (createToken) {
+    if (token) {
+    res.cookie("token" , token , {
+      httpOnly: true,  
+      secure: true,  
+      sameSite: 'None',
+      maxAge: 60* 60 * 60 * 1000,
+      path: '/'
+    } )
+
       res
         .status(200)
-        .json({ message: "user loggin success", token: createToken });
+        .json({ message: "user loggin success" });
 
     }
   } catch (error) {
