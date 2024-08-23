@@ -9,7 +9,7 @@ const verifyUser = require("./controllers/userVerification");
 const isAuthenticated = require("./middlewares/auth");
 const multmid = require("./middlewares/multer");
 const { config } = require("dotenv");
-const cookieParser = require("cookie-parser");
+const cookie = require("cookie-parser")
 
 config("/.env")
 
@@ -23,14 +23,13 @@ const server = express(); // inheritance
 connectDb();
 
 server.use(cors({
-  origin: 'http://localhost:4000',  
+  origin: 'http://localhost:3000',  
   credentials: true  
 }));
 
-server.use(cors()); // middle ware
 // server.use(express.json())  // json parsing
 server.use(bodyParser.json())
-server.use(cookieParser())
+server.use(cookie())
 
 
 // api route for verifying token
